@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For you, on our anniversary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF3F2; --text:#3A2440; --muted:#7A6580; --accent:#C2476B; --card:#FFFFFF; --soft:#F0DCE4; --line:#E4C9D4;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#1E1833;--text:#F3E9F4;--muted:#B9A8C4;--accent:#F29AB2;--card:#2A2245;--soft:#342B55;--line:#46396B;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#1E1833;--text:#F3E9F4;--muted:#B9A8C4;--accent:#F29AB2;--card:#2A2245;--soft:#342B55;--line:#46396B;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:1.05rem;line-height:1.65}
+main{max-width:46rem;margin:0 auto;padding:0 1.4rem 5rem}
+section{padding:4.5rem 0 0}
+h1,h2{font-family:var(--serif);font-weight:500;line-height:1.05;margin:0}
+h2{font-size:clamp(2rem,6vw,2.8rem);margin-bottom:1.6rem}
+p{margin:0 0 1rem}
+
+/* Hero */
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 0 0}
+.hero .names{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--accent);margin-bottom:1rem}
+.hero h1{font-size:clamp(2.8rem,11vw,5.6rem);font-style:italic;font-weight:600}
+.hero .sub{color:var(--muted);max-width:30rem;margin-top:1.2rem}
+.clock{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem 1rem;margin-top:2.4rem;max-width:30rem}
+.clock div{border-top:2px solid var(--accent);padding-top:.5rem}
+.clock b{display:block;font-family:var(--serif);font-size:clamp(2.2rem,8vw,3.2rem);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.clock span{color:var(--muted);font-size:.9rem}
+.scroll{margin-top:2.6rem;color:var(--muted);font-size:.95rem}
+
+/* Timeline */
+.timeline{list-style:none;margin:0;padding:0 0 0 1.4rem;border-left:2px solid var(--line)}
+.timeline li{position:relative;padding:0 0 2rem 1.2rem}
+.timeline li::before{content:"";position:absolute;left:-1.4rem;top:.55rem;width:.8rem;height:.8rem;margin-left:-.4rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--bg)}
+.timeline time{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--accent)}
+.timeline h3{margin:.1rem 0 .3rem;font-size:1.15rem}
+.timeline p{color:var(--muted);margin:0}
+
+/* Reasons */
+.hint{color:var(--muted);margin-top:-.8rem}
+.reasons{display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:.9rem;margin-top:1.4rem}
+.reason{font:inherit;color:inherit;text-align:left;cursor:pointer;min-height:8.5rem;padding:1.1rem;border-radius:.9rem;border:1.5px solid var(--line);background:var(--card);perspective:600px}
+.reason .front,.reason .back{display:block}
+.reason .front{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--accent)}
+.reason .back{display:none}
+.reason[aria-pressed="true"]{background:var(--soft);border-color:var(--accent)}
+.reason[aria-pressed="true"] .front{display:none}
+.reason[aria-pressed="true"] .back{display:block;animation:flip .35s ease}
+@keyframes flip{from{opacity:0;transform:rotateX(70deg)}to{opacity:1;transform:none}}
+.reason:focus-visible,.seal:focus-visible,.theme:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.count{margin-top:1rem;color:var(--muted);font-size:.95rem}
+
+/* Letter */
+.envelope{position:relative}
+.seal{display:block;width:100%;font:inherit;color:inherit;cursor:pointer;text-align:center;padding:3rem 1rem;border-radius:1rem;border:1.5px dashed var(--accent);background:var(--soft)}
+.seal .heart{display:block;font-size:2.4rem;color:var(--accent);line-height:1}
+.seal span{font-family:var(--serif);font-style:italic;font-size:1.5rem}
+.letter{display:none;background:var(--card);border:1.5px solid var(--line);border-radius:1rem;padding:2rem 1.6rem}
+.letter.open{display:block;animation:rise .6s ease}
+.letter p{font-family:var(--serif);font-size:1.4rem;line-height:1.6}
+.letter .sign{font-style:italic;color:var(--accent);margin-top:1.5rem;margin-bottom:0}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:1.6rem 1.2rem}
+.photo{margin:0;transform:rotate(var(--r,0deg))}
+.frame{aspect-ratio:4/5;background:var(--card);border:1.5px solid var(--line);padding:.55rem .55rem 0;border-radius:.3rem;display:flex}
+.frame img{width:100%;height:100%;object-fit:cover;border-radius:.15rem}
+.empty{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;color:var(--muted);background:var(--soft);border-radius:.15rem;font-size:.95rem}
+.empty:focus-visible,.music:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.photo figcaption{font-family:var(--serif);font-style:italic;font-size:1.2rem;text-align:center;margin-top:.5rem}
+.music{position:fixed;left:.8rem;bottom:calc(env(safe-area-inset-bottom,0px) + .8rem);z-index:5;font:inherit;font-size:.95rem;color:var(--text);background:var(--card);border:1.5px solid var(--accent);border-radius:2rem;padding:.5rem 1rem;cursor:pointer}
+.music[aria-pressed="true"]{background:var(--accent);color:var(--bg)}
+footer{padding-top:4rem;text-align:center;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:1.2rem}
+.theme{position:fixed;top:calc(env(safe-area-inset-top,0px) + .6rem);right:.8rem;font:inherit;font-size:.9rem;color:var(--text);background:var(--card);border:1.5px solid var(--line);border-radius:2rem;padding:.35rem .9rem;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.reason[aria-pressed="true"] .back,.letter.open{animation:none}}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" type="button" aria-label="Switch between light and dark">Light / Dark</button>
+<button class="music" id="music" type="button" aria-pressed="false"></button>
+<audio id="song" loop></audio>
+<input type="file" id="songfile" accept="audio/*" hidden>
+<main>
+  <header class="hero">
+    <div class="names" id="names"></div>
+    <h1 id="title"></h1>
+    <p class="sub" id="sub"></p>
+    <div class="clock" id="clock" aria-live="off"></div>
+    <p class="scroll">Scroll down. There’s more.</p>
+  </header>
+
+  <section>
+    <h2>How we got here</h2>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+  <section>
+    <h2>Reasons I love you</h2>
+    <p class="hint">Tap a card to open it.</p>
+    <div class="reasons" id="reasons"></div>
+    <p class="count" id="count"></p>
+  </section>
+
+  <section>
+    <h2>Our favourite moments</h2>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section>
+    <h2>One more thing</h2>
+    <div class="envelope">
+      <button class="seal" id="seal" type="button" aria-expanded="false" aria-controls="letter">
+        <span class="heart" aria-hidden="true">♥</span>
+        <span>Open your letter</span>
+      </button>
+      <div class="letter" id="letter" role="region" aria-label="Letter"></div>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+</main>
+
+<script>
+/* ============ EDIT YOUR DETAILS HERE ============ */
+const CONFIG = {
+  from: "Theo",
+  to: "Iannah",
+  startDate: "2024-11-21T00:00:00",       // the moment your story started
+  title: "Happy anniversary, Iannah.",
+  subtitle: "I built you a little corner of the internet, because you’re worth more than a card.",
+  milestones: [
+    { date: "September 2024", title: "The day we met", text: "I didn’t know it yet, but my life had just changed direction." },
+    { date: "November 2025", title: "our first anniversary", text: "A year with you." },
+    { date: "June 2025", title: "our first trip", text: "The first time we traveled together." },
+    { date: "Today", title: "Still choosing you", text: "Every day, and I’d do it again." }
+  ],
+  reasons: [
+    "Your laugh makes any room feel warmer.",
+    "You remember the small things I forget I said.",
+    "You’re kind to people who can never repay you.",
+    "You make ordinary days feel like holidays.",
+    "You believe in me on the days I don’t.",
+    "You sing in the shower when you think no one hears.",
+    "You make me want to be braver.",
+    "Home is wherever you are."
+  ],
+  letter: [
+    "Iannah,",
+    "Thank you for every ordinary day we’ve turned into something special. For the patience, the jokes, and the way you love me exactly as I am.",
+    "I don’t know what the next year holds, but I know I want to spend it next to you.",
+    "Happy anniversary. I love you."
+  ],
+  signoff: "Yours, always — Theo",
+  footer: "Made with love, just for you.",
+  /* Photos: src is an image (embedded as a data: URI). Leave empty to show a placeholder. */
+  photos: [
+    { src: "assets/baby.jpg", caption: "Our first trip together" },
+    { src: "assets/mahal.jpg", caption: "A special place" },
+    { src: "assets/love.jpg", caption: "Our love" },
+    { src: "assets/babylove.jpg", caption: "A quiet moment" },
+    { src: "assets/miming.jpeg", caption: "Us, lately" },
+    { src: "assets/booth.jpeg", caption: "A happy memory" }
+  ],
+  /* Song: src is an audio file embedded as a data: URI. Leave empty until you have one. */
+  song: { src: "assets/Wilbert Ross - Dulo Ng Pahina", caption: "our song" }
+};
+/* ================================================== */
+
+const $ = id => document.getElementById(id);
+$("names").textContent = CONFIG.from + " & " + CONFIG.to;
+$("title").textContent = CONFIG.title;
+$("sub").textContent = CONFIG.subtitle;
+$("footer").textContent = CONFIG.footer;
+document.title = CONFIG.title;
+
+/* Live counter */
+const start = new Date(CONFIG.startDate);
+const units = ["years","months","days","hours","minutes","seconds"];
+$("clock").innerHTML = units.map(u => '<div><b id="u-' + u + '">0</b><span>' + u + '</span></div>').join("");
+function tick(){
+  const now = new Date();
+  let y = now.getFullYear() - start.getFullYear();
+  let m = now.getMonth() - start.getMonth();
+  let d = now.getDate() - start.getDate();
+  let h = now.getHours() - start.getHours();
+  let mi = now.getMinutes() - start.getMinutes();
+  let s = now.getSeconds() - start.getSeconds();
+  if (s < 0){ s += 60; mi--; }
+  if (mi < 0){ mi += 60; h--; }
+  if (h < 0){ h += 24; d--; }
+  if (d < 0){ d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); m--; }
+  if (m < 0){ m += 12; y--; }
+  const v = {years:y, months:m, days:d, hours:h, minutes:mi, seconds:s};
+  units.forEach(u => { $("u-" + u).textContent = v[u]; });
+}
+tick(); setInterval(tick, 1000);
+
+/* Timeline */
+$("timeline").innerHTML = CONFIG.milestones.map(m =>
+  '<li><time>' + m.date + '</time><h3>' + m.title + '</h3><p>' + m.text + '</p></li>').join("");
+
+/* Reasons */
+let opened = 0;
+const total = CONFIG.reasons.length;
+$("count").textContent = "0 of " + total + " opened";
+$("reasons").innerHTML = CONFIG.reasons.map((r, i) =>
+  '<button class="reason" type="button" aria-pressed="false"><span class="front">Reason ' + (i + 1) + '</span><span class="back">' + r + '</span></button>').join("");
+document.querySelectorAll(".reason").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.getAttribute("aria-pressed") === "true") return;
+    btn.setAttribute("aria-pressed", "true");
+    opened++;
+    $("count").textContent = opened === total ? "That’s all of them, for now. I’ll keep finding more." : opened + " of " + total + " opened";
+  });
+});
+
+/* Letter */
+$("letter").innerHTML = CONFIG.letter.map(p => "<p>" + p + "</p>").join("") + '<p class="sign">' + CONFIG.signoff + "</p>";
+$("seal").addEventListener("click", () => {
+  $("seal").style.display = "none";
+  $("seal").setAttribute("aria-expanded", "true");
+  $("letter").classList.add("open");
+  $("letter").setAttribute("tabindex", "-1");
+  $("letter").focus({preventScroll:true});
+});
+
+/* Photos */
+$("gallery").innerHTML = CONFIG.photos.map((p, i) =>
+  '<figure class="photo" style="--r:' + (i % 2 ? 1.5 : -1.5) + 'deg"><div class="frame">' +
+  (p.src ? '<img src="' + p.src + '" alt="' + p.caption + '" loading="lazy">'
+         : '<label class="empty" tabindex="0" role="button">Add a photo<input type="file" accept="image/*" hidden></label>') +
+  '</div><figcaption>' + p.caption + '</figcaption></figure>').join("");
+$("gallery").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  const img = new Image();
+  img.src = URL.createObjectURL(f);
+  img.alt = "";
+  e.target.closest(".frame").replaceChildren(img);
+});
+$("gallery").addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("empty")) { e.preventDefault(); e.target.querySelector("input").click(); }
+});
+
+/* Song */
+const audio = $("song"), mbtn = $("music");
+let hasSong = !!CONFIG.song.src;
+if (hasSong) audio.src = CONFIG.song.src;
+function label(){
+  mbtn.textContent = !hasSong ? "♪ Choose a song" : audio.paused ? "♪ Play " + CONFIG.song.title : "❚❚ Pause";
+  mbtn.setAttribute("aria-pressed", String(hasSong && !audio.paused));
+}
+label();
+audio.addEventListener("play", label);
+audio.addEventListener("pause", label);
+mbtn.addEventListener("click", () => {
+  if (!hasSong) { $("songfile").click(); return; }
+  audio.paused ? audio.play().catch(() => {}) : audio.pause();
+});
+$("songfile").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  audio.src = URL.createObjectURL(f);
+  hasSong = true;
+  audio.play().catch(() => {});
+  label();
+});
+
+/* Theme toggle */
+$("theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = getComputedStyle(root).colorScheme === "dark";
+  root.setAttribute("data-theme", dark ? "light" : "dark");
+});
+</script>
+</body>
+</html>
